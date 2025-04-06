@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     'foodTracker',  # Custom app for food tracking
     'rest_framework',  # Django REST framework for API development
+    'rangefilter', # For filtering in Django admin
 ]
 
 MIDDLEWARE = [
@@ -76,12 +77,27 @@ WSGI_APPLICATION = 'FoodTrackerPPG.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+#'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'FoodTrackerDB',
+        'USER': 'postgres',
+        'PASSWORD': 'azerty',
+        'HOST': 'localhost',
+        'PORT': '5432', 
+    }
+}
+#'''
+
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
 
 
 # Password validation

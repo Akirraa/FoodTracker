@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import MinValueValidator
 # Create your models here.
 class Person(models.Model):
     Username = models.CharField(max_length=100)
@@ -7,7 +7,7 @@ class Person(models.Model):
     Email = models.EmailField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    class meta:
+    class Meta:
         abstract = True
     
     def __str__(self):
@@ -19,27 +19,28 @@ class user(Person):
     height = models.IntegerField()
     weight = models.FloatField()
     
-    class meta:
+    class Meta:
         db_table = "user"
-        verbose_name = "user"
-        verbose_name_plural = "users"
         ordering = ["Username"]
         
 
 class food(models.Model):
-    name = models.CharField(max_length=100)
-    calories = models.IntegerField()
-    protein = models.FloatField()
-    carbs = models.FloatField()
-    fats = models.FloatField()
-    fiber = models.FloatField()
-    serving_size = models.CharField(max_length=20)
+    name = models.CharField(max_length=200)
+    calories = models.IntegerField(default=0, validators=[MinValueValidator(0)])
+    protein = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    carbs = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    fats = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    fiber = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    sugar = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    water = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    sodium = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    calcium = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    iron = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    potassium = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    cholesterol = models.FloatField(default=0, validators=[MinValueValidator(0)])
     
-    
-    class meta:
+    class Meta:
         db_table = "food"
-        verbose_name = "food"
-        verbose_name_plural = "foods"
         ordering = ["name"]
         
     def __str__(self):
@@ -53,10 +54,8 @@ class food_log(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    class meta:
+    class Meta:
         db_table = "food_log"
-        verbose_name = "food_log"
-        verbose_name_plural = "food_logs"
         ordering = ["date"]
     
     def __str__(self):
@@ -70,10 +69,8 @@ class recipe(models.Model):
     cook_time = models.IntegerField()
     servings = models.IntegerField()
     
-    class meta:
+    class Meta:
         db_table = "recipe"
-        verbose_name = "recipe"
-        verbose_name_plural = "recipes"
         ordering = ["name"]
         
     def __str__(self):
@@ -82,12 +79,10 @@ class recipe(models.Model):
 class recipe_ingredient(models.Model):
     recipe = models.ForeignKey(recipe, on_delete=models.CASCADE)
     food = models.ForeignKey(food, on_delete=models.CASCADE)
-    quantity = models.FloatField()
+    quantity = models.CharField(max_length=100)
     
-    class meta:
+    class Meta:
         db_table = "recipe_ingredient"
-        verbose_name = "recipe_ingredient"
-        verbose_name_plural = "recipe_ingredients"
         ordering = ["recipe"]
         
     def __str__(self):
