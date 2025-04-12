@@ -19,7 +19,7 @@ class FoodAdmin(admin.ModelAdmin):
         ('calcium'), 
         ('iron'), 
         ('potassium'),
-    )  # Use RangeFilter for numeric fields
+    )  
     ordering = ('name',)
 
 

@@ -38,10 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'foodTracker',  # Custom app for food tracking
-    'rest_framework',  # Django REST framework for API development
-    'rangefilter', # For filtering in Django admin
+    'foodTracker', 
+    'rest_framework', 
+    'psycopg2',
+    
+    #tailwind stuff
+    'tailwind',  
+    'theme',
+    'django_browser_reload', #no more struggling to reload the page after every change  
 ]
+NPM_BIN_PATH = 'D:/nodejs/npm.cmd' 
+TAILWIND_APP_NAME = 'theme'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'FoodTrackerPPG.urls'
@@ -134,7 +142,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+# If not already set:
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
