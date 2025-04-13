@@ -76,3 +76,15 @@ document.addEventListener("DOMContentLoaded", () => {
     suggestionBox.innerHTML = "";
   }
   
+
+  const navbar = document.getElementById("navbar");
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      navbar.classList.remove("bg-transparent");
+      navbar.classList.add("bg-black/80", "backdrop-blur");
+    } else {
+      navbar.classList.remove("bg-black/80", "backdrop-blur");
+      navbar.classList.add("bg-transparent");
+    }
+  });

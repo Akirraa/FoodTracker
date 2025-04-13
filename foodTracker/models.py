@@ -1,31 +1,20 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.contrib.auth.models import AbstractUser
 # Create your models here.
-class Person(models.Model):
-    Username = models.CharField(max_length=100)
-    Password = models.CharField(max_length=100)
-    Email = models.EmailField(max_length=100, unique=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    class Meta:
-        abstract = True
-    
-    def __str__(self):
-        return self.Username
-    
 
-class user(Person):
-    age = models.IntegerField()
-    height = models.IntegerField()
-    weight = models.FloatField()
-    
+class User(AbstractUser):
+    age = models.PositiveIntegerField(null=True, blank=True)
+    height = models.PositiveIntegerField(null=True, blank=True)
+    weight = models.FloatField(null=True, blank=True)
+
     class Meta:
-        db_table = "user"
-        ordering = ["Username"]
+        db_table = 'user'
+
         
 
-class food(models.Model):
-    name = models.CharField(max_length=200)
+class Food(models.Model):
+    name = models.CharField(max_length=200, default="")
     calories = models.IntegerField(default=0, validators=[MinValueValidator(0)])
     protein = models.FloatField(default=0, validators=[MinValueValidator(0)])
     carbs = models.FloatField(default=0, validators=[MinValueValidator(0)])
@@ -47,9 +36,9 @@ class food(models.Model):
         return self.name
     
 
-class food_log(models.Model):
-    user = models.ForeignKey(user, on_delete=models.CASCADE)
-    food = models.ForeignKey(food, on_delete=models.CASCADE)
+class Food_Log(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE)
     date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -62,7 +51,7 @@ class food_log(models.Model):
         return f"{self.user.Username} - {self.food.name} - {self.date}"    
     
 
-class recipe(models.Model):
+class Recipe(models.Model):
     name = models.CharField(max_length=100)
     instructions = models.TextField()
     prep_time = models.IntegerField()
@@ -76,9 +65,9 @@ class recipe(models.Model):
     def __str__(self):
         return self.name
     
-class recipe_ingredient(models.Model):
-    recipe = models.ForeignKey(recipe, on_delete=models.CASCADE)
-    food = models.ForeignKey(food, on_delete=models.CASCADE)
+class Recipe_Ingredient(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    food = models.ForeignKey(Food, on_delete=models.CASCADE)
     quantity = models.CharField(max_length=100)
     
     class Meta:

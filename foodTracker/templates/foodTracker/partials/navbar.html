@@ -1,38 +1,38 @@
 {% load static %}
-<nav class="bg-transparent text-white p-4 flex items-center justify-between relative">
+<nav class=" {% if dark_bg %}  bg-transparent text-white {% else %} bg-transparent text-black {% endif %} p-4 flex items-center justify-between relative">
 
   <!-- Left: Logo -->
-  <div class="flex items-center">
-    <a href="#">
-      <img src="{% static 'images/logo.webp' %}" alt="Food Tracker Logo" class="h-1/6  w-1/6 md:h-1/7 md:w-1/7 lg:h-1/7 lg:w-1/7 xl:h-1/7 xl:w-1/7">
+  <div class="flex items-center w-full justify-start ">
+    <a href="{% url 'home' %}" class="flex items-center">
+      <img src="{%if dark_bg%} {% static 'images/logo.webp' %} {% else %} {% static 'images/Dark logo.png' %} {% endif %} " alt="Food Tracker Logo" class=" md:h-1/7 md:w-1/7 lg:h-1/7 lg:w-1/7 xl:h-1/7 xl:w-1/7">
     </a>
   </div>
 
   <!-- Center: Navigation Links -->
   <div class="absolute left-1/2 transform -translate-x-1/2 hidden md:flex space-x-8">
-    <a href="#" class="text-lg hover:text-yellow-400 hover:shadow-md transition-all duration-300 cursor-grab">Home</a>
+    <a href="#" class="text-lg hover:text-yellow-400  transition-all duration-300 cursor-grab">Home</a>
       
-    <a href="#" class="text-lg hover:text-yellow-400 hover:shadow-md transition-all duration-300">Recipes</a>
-    <a href="#" class="text-lg hover:text-yellow-400 hover:shadow-md transition-all duration-300">Contact Us</a>
-    <a href="#" class="text-lg hover:text-yellow-400 hover:shadow-md transition-all duration-300">About Us</a>
+    <a href="#" class="text-lg hover:text-yellow-400  transition-all duration-300">Recipes</a>
+    <a href="#" class="text-lg hover:text-yellow-400  transition-all duration-300">Contact Us</a>
+    <a href="{% url 'about_us' %}" class="text-lg hover:text-yellow-400 transition-all duration-300">About Us</a>
   </div>
 
   <div class="flex items-center space-x-4">
     {%if user.is_authenticated%} 
-      <a href="#" class="text-lg hover:text-yellow-400 hover:shadow-md transition-all duration-300">Tracking</a>
+      <a href="#" class="text-lg hover:text-yellow-400  transition-all duration-300">Tracking</a>
       <svg class="w-1 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 100">
         <line x1="0" y1="0" x2="0" y2="100" stroke="white" stroke-width="2" />
       </svg>
-      <a href="#" class="text-lg hover:text-yellow-400 hover:shadow-md transition-all duration-300">Profile</a>
+      <a href="#" class="text-lg hover:text-yellow-400  transition-all duration-300">Profile</a>
     {%else%}
-      <a href="#" class="text-lg hover:text-yellow-400 hover:shadow-md transition-all duration-300 ">Login</a>
+      <a href="#" class="text-lg hover:text-yellow-400  transition-all duration-300 ">Login</a>
       <svg class="w-1 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 100">
         <line x1="0" y1="0" x2="0" y2="100" stroke="white" stroke-width="2" />
       </svg>
-      <a href="#" class="text-lg hover:text-yellow-400 hover:shadow-md transition-all duration-300">Sign up</a>
+      <a href="#" class="text-lg hover:text-yellow-400  transition-all duration-300">Sign up</a>
     {%endif%}
-    <button id="menu-toggle" class="text-white focus:outline-none">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+    <button id="menu-toggle" class="{% if dark_bg %} text-white {% else %} text-black {% endif %} focus:outline-none">
+      <svg class="{% if dark_bg %} text-white {% else %} text-black {% endif %} w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M4 6h16M4 12h16m-7 6h7"></path>

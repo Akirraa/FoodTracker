@@ -1,0 +1,44 @@
+{% extends "FoodTracker/base.html" %}
+{% load static %}
+
+{% block title %}About Us | Nutra{% endblock %}
+
+{% block content %}
+<div class="bg-gradient-to-b from-orange-50 to-white pt-30 pb-17 px-6 text-center" 
+     style="background-image: url('{% static 'images/About_Us_bg.webp' %}'); 
+            background-size: cover; 
+            background-position: 20px 30px; 
+            margin-top: 10px;">
+    <h2 class="text-4xl font-bold text-gray-800 my-4 font-poppins">Get to Know Us: Our Passion for</h2>
+    <h3 class="text-3xl text-yellow-500 font-bold italic mb-16 font-Patrick">Healthy Life styles</h3>
+
+    <div class="flex flex-col md:flex-row justify-center items-start gap-16 max-w-6xl mx-auto">
+        <!-- Wide Range of Recipes -->
+        <div class="flex flex-col items-center text-center max-w-sm mt-4">
+            <img src="{% static 'images/about_us1.webp' %}" alt="Wide Range of Recipes" class="w-48 h-auto mb-6">
+            <h3 class="font-semibold text-xl text-gray-800 mb-2 font-poppins">Wide Range of Recipes</h3>
+            <p class="text-base text-gray-600 font-poppins"> 
+                Try out a diverse collection of recipes from around the world,
+            </p>
+        </div>
+
+        <!-- Customize Your Recipes -->
+        <div class="flex flex-col items-center text-center max-w-sm mt-12">
+            <img src="{% static 'images/about_us2.webp' %}" alt="Customize your recipes" class="w-52 h-auto mb-6">
+            <h3 class="font-semibold text-xl text-gray-800 mb-2 font-poppins">Customize your recipes</h3>
+            <p class="text-base text-gray-600 font-poppins">
+                Create your favorite recipe, personalized with your own unique flavor. Make every dish truly yours!
+            </p>
+        </div>
+
+        <!-- Track Your Food -->
+        <div class="flex flex-col items-center text-center max-w-sm mt-4">
+            <img src="{% static 'images/about_us3.png' %}" alt="Track your food" class="w-48 h-auto mb-6">
+            <h3 class="font-semibold text-xl text-gray-800 mb-2 font-poppins">Track your food</h3>
+            <p class="text-base text-gray-600 font-poppins">
+                Keep track of everything you eat, monitor your meals, stay on top of your goals, and fuel your day the smart way!
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
