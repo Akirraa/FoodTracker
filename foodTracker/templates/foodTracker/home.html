@@ -1,72 +1,105 @@
-{% extends "FoodTracker/base.html" %}
-{% load static %}
+  {% extends "FoodTracker/base.html" %}
+  {% load static %}
 
-{% block title %}Home | Nutra{% endblock %}
+  {% block title %}Home | Nutra{% endblock %}
 
-{% block content %}
+  {% block content %}
 
-<div class="bg-cover bg-[center_30%]  h-screen relative" style="background-image: url('{% static "images/Background_Nutre.png" %}')">
+  <div class="bg-cover bg-[center_30%]  h-screen relative" style="background-image: url('{% static "images/Background_Nutre.png" %}')">
+      <div class="absolute inset-0 bg-black/50"></div> <!-- Overlay for darkening the background -->
+        <div class="flex flex-col items-start justify-center h-full relative pl-20 ">
+          <div class="mb-20">
+            <h5 class="text-lg text-gray-300 mb-1 text-left">With Nutra</h5>
+            <h1 class="text-4xl font-bold text-gray-300  text-left">Balance Every Bite</h1>
+          </div>
+
+          <div class="w-sm max-w-md relative">
+            <form action="" method="get">
+              <input
+              type="text"
+              name = "q"
+              id="search-input"
+              placeholder="Search for a recipe, ingredient, or meal..."
+              autocomplete="off" 
+              class="w-full px-2 py-3 pr-12 text-center rounded-full bg-transparent text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 mb-8"
+            />
+          
+            <!-- Circular Search Icon -->
+            <button type="submit" class="absolute top-6 right-3 transform -translate-y-1/2 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center cursor-pointer transition ">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.65 16.65a7 7 0 1 0-9.9-9.9 7 7 0 0 0 9.9 9.9z" />
+              </svg>
+            </button>
+            </form>
+            
+          
+            <button class="w-full px-3 py-2 rounded-full bg-white/10 text-white font-semibold hover:bg-yellow-500 transition duration-200 mt-0">
+              Start your Nutra Journey
+            </button>
+          </div>
+          
+        </div>
+  </div>
+
+  <!-- Slider Section -->
+  <div class="w-full bg-white/10 backdrop-blur-xl border border-white/20 py-6 px-4 -mt-40 rounded-t-3xl z-10 relative shadow-md">
+      <div class="flex overflow-x-auto space-x-4 hide-scrollbar px-2">
     
-</div>
-
-<!-- Slider Section -->
-<div class="w-full bg-white/10 backdrop-blur-xl border border-white/20 py-6 px-4 -mt-40 rounded-t-3xl z-10 relative shadow-md">
-    <div class="flex overflow-x-auto space-x-4 hide-scrollbar px-2">
-  
-      <!-- Card -->
-      <div class="flex items-center rounded-2xl shadow-lg min-w-[calc(100%/4+20px)] p-4">
-        <img src="{% static 'images/pasta_salad.webp' %}" alt="Protein Bowl" class="w-20 h-20 rounded-full border-2 border-white shadow-md mr-5">
-        <div class="flex flex-col justify-center text-white">
-          <p class="font-semibold text-base">Pasta Salad</p>
-          <button class="text-sm mt-3 w-26 h-10s px-3 py-1.5 rounded-md bg-white/10 text-white hover:bg-yellow-400 hover:text-black transition-all duration-200 flex items-center space-x-2">
-            <span>Click Here</span>
-            <span class="w-1 h-1 bg-white rounded-full"></span> <!-- White dot -->
-        </button>
+        <!-- Card -->
+        <div class="flex items-center rounded-2xl shadow-lg min-w-[calc(100%/4+20px)] p-4">
+          <img src="{% static 'images/pasta_salad.webp' %}" alt="Protein Bowl" class="w-20 h-20 rounded-full border-2 border-white shadow-md mr-5">
+          <div class="flex flex-col justify-center text-white">
+            <p class="font-semibold text-base">Pasta Salad</p>
+            <button class="text-sm mt-3 w-26 h-10s px-3 py-1.5 rounded-md bg-white/10 text-white hover:bg-yellow-400 hover:text-black transition-all duration-200 flex items-center space-x-2">
+              <span>Click Here</span>
+              <span class="w-1 h-1 bg-white rounded-full"></span> <!-- White dot -->
+          </button>
+          </div>
         </div>
-      </div>
-      
-  
-      <div class="flex items-center rounded-2xl shadow-lg min-w-[calc(100%/4+20px)] p-4">
-        <img src="{% static 'images/protein_bowl.webp' %}" alt="Protein Bowl" class="w-20 h-20 rounded-full border-2 border-white shadow-md mr-5">
-        <div class="flex flex-col justify-center text-white">
-          <p class="font-semibold text-base">Protein Bowl</p>
-          <button class="text-sm mt-3 w-26 h-10s px-3 py-1.5 rounded-md bg-white/10 text-white hover:bg-yellow-400 hover:text-black transition-all duration-200 flex items-center space-x-2">
-            <span>Click Here</span>
-            <span class="w-1 h-1 bg-white rounded-full"></span> <!-- White dot -->
-        </button>
+        
+    
+        <div class="flex items-center rounded-2xl shadow-lg min-w-[calc(100%/4+20px)] p-4">
+          <img src="{% static 'images/protein_bowl.webp' %}" alt="Protein Bowl" class="w-20 h-20 rounded-full border-2 border-white shadow-md mr-5">
+          <div class="flex flex-col justify-center text-white">
+            <p class="font-semibold text-base">Protein Bowl</p>
+            <button class="text-sm mt-3 w-26 h-10s px-3 py-1.5 rounded-md bg-white/10 text-white hover:bg-yellow-400 hover:text-black transition-all duration-200 flex items-center space-x-2">
+              <span>Click Here</span>
+              <span class="w-1 h-1 bg-white rounded-full"></span> <!-- White dot -->
+          </button>
+          </div>
         </div>
-      </div>
-      
-      
-  
-      <div class="flex items-center rounded-2xl shadow-lg min-w-[calc(100%/4+20px)] p-4">
-        <img src="{% static 'images/mushroom_pizza.webp' %}" alt="Protein Bowl" class="w-20 h-20 rounded-full border-2 border-white shadow-md mr-5">
-        <div class="flex flex-col justify-center text-white">
-          <p class="font-semibold text-base">Mushroom Pizza</p>
-          <button class="text-sm mt-3 w-26 h-10s px-3 py-1.5 rounded-md bg-white/10 text-white hover:bg-yellow-400 hover:text-black transition-all duration-200 flex items-center space-x-2">
-            <span>Click Here</span>
-            <span class="w-1 h-1 bg-white rounded-full"></span> <!-- White dot -->
-        </button>
+        
+        
+    
+        <div class="flex items-center rounded-2xl shadow-lg min-w-[calc(100%/4+20px)] p-4">
+          <img src="{% static 'images/mushroom_pizza.webp' %}" alt="Protein Bowl" class="w-20 h-20 rounded-full border-2 border-white shadow-md mr-5">
+          <div class="flex flex-col justify-center text-white">
+            <p class="font-semibold text-base">Mushroom Pizza</p>
+            <button class="text-sm mt-3 w-26 h-10s px-3 py-1.5 rounded-md bg-white/10 text-white hover:bg-yellow-400 hover:text-black transition-all duration-200 flex items-center space-x-2">
+              <span>Click Here</span>
+              <span class="w-1 h-1 bg-white rounded-full"></span> <!-- White dot -->
+          </button>
+          </div>
         </div>
-      </div>
-      
-      
-      <div class="flex items-center rounded-2xl shadow-lg min-w-[calc(100%/4+20px)] p-4">
-        <img src="{% static 'images/full_meals.png' %}" alt="Protein Bowl" class="w-20 h-20 rounded-full border-2 border-white shadow-md mr-5">
-        <div class="flex flex-col justify-center text-white">
-          <p class="font-semibold text-base">Full Meals</p>
-          <button class="text-sm mt-3 w-26 h-10s px-3 py-1.5 rounded-md bg-white/10 text-white hover:bg-yellow-400 hover:text-black transition-all duration-200 flex items-center space-x-2">
-            <span>Click Here</span>
-            <span class="w-1 h-1 bg-white rounded-full"></span> <!-- White dot -->
-        </button>
+        
+        
+        <div class="flex items-center rounded-2xl shadow-lg min-w-[calc(100%/4+20px)] p-4">
+          <img src="{% static 'images/full_meals.png' %}" alt="Protein Bowl" class="w-20 h-20 rounded-full border-2 border-white shadow-md mr-5">
+          <div class="flex flex-col justify-center text-white">
+            <p class="font-semibold text-base">Full Meals</p>
+            <button class="text-sm mt-3 w-26 h-10s px-3 py-1.5 rounded-md bg-white/10 text-white hover:bg-yellow-400 hover:text-black transition-all duration-200 flex items-center space-x-2">
+              <span>Click Here</span>
+              <span class="w-1 h-1 bg-white rounded-full"></span> <!-- White dot -->
+          </button>
+          </div>
         </div>
-      </div>
-      
+        
+        </div>
       </div>
     </div>
-  </div>
-  
+    
 
+    <script src="/static/js/script.js"></script>
 
-
-{% endblock %}
+  {% endblock %}

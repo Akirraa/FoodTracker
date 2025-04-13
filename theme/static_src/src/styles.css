@@ -11,7 +11,7 @@
 
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
-
+@plugin 'tailwind-scrollbar';
 
 @layer utilities {
   .hide-scrollbar {
@@ -21,4 +21,20 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none;            /* Chrome, Safari and Opera */
   }
+
+  .custom-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); /* Match bg-white/opacity */
+    border-radius: 9999px;
+  }
+  
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 116, 139, 0.7); /* Tailwind gray-400/gray-500 */
+    border-radius: 9999px;
+  }
+  
+
 }
