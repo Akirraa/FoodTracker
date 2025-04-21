@@ -1,7 +1,10 @@
-from django.shortcuts import render
-from django.db.models import Q
-from .models import Recipe, Food
-from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.db.models import Q #hedi bch t7adharlk querry bch na3ml search lel recipes w foods fil home page
+from .models import Recipe, Food #hedhom lmodels mte3i xd
+from django.http import JsonResponse #hedhi bch na3mlou ajax call lel search bar
+
+
+
 # Create your views here.
 
 
@@ -54,3 +57,5 @@ def food_detail(request, pk):
 
 def about_us(request):
     return render(request, 'FoodTracker/about_us.html', {'dark_bg': False})
+
+

@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import User, Food, Food_Log, Recipe, Recipe_Ingredient
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from .models import  Food, Food_Log, Recipe, Recipe_Ingredient
+
 
 
 # Register your models here.
@@ -43,14 +43,7 @@ class RecipeIngredientAdmin(admin.ModelAdmin):
     search_fields = ('recipe__name', 'food__name')
     ordering = ('recipe',)
 
-class UserAdmin(BaseUserAdmin):
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
-    search_fields = ('username', 'email')
-    ordering = ('username',)
-    filter_horizontal = ()
-    list_filter = ()
-    
-admin.site.register(User, UserAdmin)
+
 admin.site.register(Food, FoodAdmin)
 admin.site.register(Food_Log, FoodLogAdmin)
 admin.site.register(Recipe, RecipeAdmin)

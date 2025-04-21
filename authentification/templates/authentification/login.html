@@ -1,0 +1,82 @@
+{% extends "FoodTracker/base.html" %}
+{% load static %}
+
+{% block title %}Login | Nutra{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen w-full bg-white overflow-hidden">
+
+  <!-- Right Background Image Section -->
+  <div class="absolute right-0 top-0 h-full w-[70%] z-0">
+    <a href="{% url 'home' %}">
+      <img src="{% static 'images/login_bg.webp' %}" alt="Login Background"
+           class="h-full w-full object-cover" />
+    </a>
+  </div>
+
+  <!-- Left Login Form Section -->
+  <div class="relative z-10 flex justify-start items-start min-h-screen pr-[60%]">
+    <div class="w-full max-w-md md:max-w-lg lg:max-w-xl h-screen overflow-y-auto bg-white bg-opacity-95 p-10 rounded-r-2xl shadow-2xl">
+
+      <!-- Logo -->
+      <div class="flex justify-center mb-3">
+        <img src="{% static 'images/logo.webp' %}" alt="Nutra Logo" class="h-40">
+      </div>
+
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-8 font-poppins">Welcome back 👋</h2>
+
+      <form method="post" class="space-y-5">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div>
+          <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Email Address*</label>
+          {{ form.username }}
+        </div>
+        <div class="relative">
+            <label for="password-input" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            {{ form.password }}
+          
+            <button type="button" onclick="togglePassword()" 
+                    class="absolute right-3 top-9 text-gray-500 hover:text-gray-700 focus:outline-none"
+                    aria-label="Toggle password visibility">
+              <svg id="eye-icon" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </button>
+          </div>
+          
+          
+
+       
+
+        <button type="submit" class="w-full py-3 rounded-full bg-black text-white font-semibold hover:bg-gray-800 transition duration-200">
+          Login
+        </button>
+      </form>
+
+      <p class="text-sm text-center mt-6 text-gray-600">
+        Don't have an account?
+        <a href="{% url 'register' %}" class="text-yellow-600 hover:underline font-semibold">Sign Up</a>
+      </p>
+
+      <!-- Optional Social Icons -->
+      <div class="flex justify-center space-x-4 mt-6 text-gray-600">
+        <a href="#" aria-label="Facebook">
+          <!-- Facebook SVG -->
+        </a>
+        <a href="#" aria-label="Instagram">
+          <!-- Instagram SVG -->
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <!-- LinkedIn SVG -->
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

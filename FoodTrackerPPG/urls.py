@@ -16,9 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from foodTracker import views as foodtracker_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
     path('', include('foodTracker.urls')),
+    path('', foodtracker_views.home, name='home'),
+    path('', include('authentification.urls')),
+    
 ]
