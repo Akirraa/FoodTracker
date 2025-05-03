@@ -1,19 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const input = document.querySelector("input[name='q']");
-    const suggestionBox = createSuggestionBox();
+  // Search Input and Suggestions
+  const input = document.querySelector("input[name='q']");
+  const suggestionBox = createSuggestionBox();
   
-    input.parentNode.appendChild(suggestionBox);
+  input.parentNode.appendChild(suggestionBox);
   
-    input.addEventListener("input", () =>
-      handleSearchInput(input.value, suggestionBox)
-    );
+  input.addEventListener("input", () => handleSearchInput(input.value, suggestionBox));
   
-    document.addEventListener("click", (e) => {
-      if (!input.contains(e.target) && !suggestionBox.contains(e.target)) {
-        clearSuggestions(suggestionBox);
-        suggestionBox.classList.add("hidden");
-      }
-    });
+  document.addEventListener("click", (e) => {
+    if (!input.contains(e.target) && !suggestionBox.contains(e.target)) {
+      clearSuggestions(suggestionBox);
+      suggestionBox.classList.add("hidden");
+    }
   });
   
   // Create the suggestion dropdown
@@ -75,21 +73,46 @@ document.addEventListener("DOMContentLoaded", () => {
   function clearSuggestions(suggestionBox) {
     suggestionBox.innerHTML = "";
   }
-  
 
+  // Navbar Scroll Behavior
   const navbar = document.getElementById("navbar");
 
+  // Ensure the navbar is selected correctly
+  if (!navbar) {
+    console.error("Navbar not found");
+    return;
+  }
+
+  // Determine if the dark_bg class is present initially
+  const isDarkBg = navbar.classList.contains("text-white");
+  
   window.addEventListener("scroll", () => {
+    // Check if we've scrolled more than 50px
     if (window.scrollY > 50) {
-      navbar.classList.remove("bg-transparent");
-      navbar.classList.add("bg-black/80", "backdrop-blur");
+      navbar.classList.remove("bg-transparent", "text-white", "text-black"); // Remove the transparent background and reset text colors
+      navbar.classList.add("bg-zinc-500", "backdrop-blur"); // Add the zinc-500 background and blur effect
+  
+      // Conditionally update text color based on dark_bg
+      if (isDarkBg) {
+        navbar.classList.add("text-black"); // Change text to black if dark_bg was true
+      } else {
+        navbar.classList.add("text-white"); // Change text to white if dark_bg was false
+      }
     } else {
-      navbar.classList.remove("bg-black/80", "backdrop-blur");
-      navbar.classList.add("bg-transparent");
+      // Reset navbar to original state when at the top
+      navbar.classList.remove("bg-zinc-500", "backdrop-blur", "text-black", "text-white"); // Remove applied classes
+      navbar.classList.add("bg-transparent"); // Keep transparent background
+  
+      // Reset text color based on the initial dark_bg state
+      if (isDarkBg) {
+        navbar.classList.add("text-white"); // Reset text color to white if dark_bg was true
+      } else {
+        navbar.classList.add("text-black"); // Reset text color to black if dark_bg was false
+      }
     }
   });
 
-  // Function to handle password visibility toggle
+  // Password Visibility Toggle Function
   function togglePassword() {
     const input = document.getElementById('password-input');
     const icon = document.getElementById('eye-icon');
@@ -116,3 +139,4 @@ document.addEventListener("DOMContentLoaded", () => {
       icon.innerHTML = eye;
     }
   }
+});

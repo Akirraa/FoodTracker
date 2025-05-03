@@ -1,0 +1,89 @@
+{% extends "foodTracker/base.html" %}
+{% load static %}
+
+{% block title %}NutriTracking | Nutra{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen">
+  <!-- Background Image -->
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{% static 'images/Background_Nutre.png' %}');"></div>
+  
+  <!-- Dark Overlay -->
+  <div class="absolute inset-0 bg-black/50"></div>
+
+  <!-- Foreground Content -->
+  <div class="relative z-10 flex justify-center items-start min-h-screen pt-24 pb-10">
+    <div class="max-w-6xl w-full mx-auto px-4 py-8 bg-white/10 backdrop-blur-xl bg-opacity-80 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4 text-white">Track Your Nutrition</h2>
+
+      <!-- Search Bar -->
+      <div class="bg-white/10 backdrop-blur-xl p-6 rounded-lg shadow-md mb-6">
+        <h3 class="text-xl font-semibold mb-4 text-white">Search and Add Food</h3>
+        <div class="flex">
+          <input type="text" id="search" placeholder="Search for food..." list="food-suggestions"
+                 class="border border-gray-300 rounded px-3 py-2 w-2/3 focus:outline-none focus:ring focus:border-blue-300">
+          <datalist id="food-suggestions"></datalist>
+          <button onclick="addFood()" class="bg-yellow-400 text-white px-4 py-2 rounded ml-2">Add</button>
+        </div>
+      </div>
+
+      <!-- Grid Layout -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Left Column -->
+        <div class="md:col-span-2 space-y-6">
+          <!-- Table Card -->
+          <div class="bg-white/10 backdrop-blur-xl p-6 rounded-lg shadow-md h-[400px]">
+            <h3 class="text-xl font-semibold mb-4 text-white">Today's Intake</h3>
+            <div class="overflow-x-auto h-[300px] overflow-y-scroll hide-scrollbar">
+              <table class="min-w-full bg-white/10 backdrop-blur-xl border  rounded text-white">
+                <thead class="bg-yellow-400">
+                  <tr>
+                    <th class="px-4 py-2 text-left">Name</th>
+                    <th class="px-4 py-2 text-left">Multiplier</th>
+                    <th class="px-4 py-2 text-left">Calories</th>
+                    <th class="px-4 py-2 text-left">Protein</th>
+                    <th class="px-4 py-2 text-left">Carbs</th>
+                    <th class="px-4 py-2 text-left">Fats</th>
+                    <th class="px-4 py-2 text-left">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="intake-table-body" class="divide-y divide-gray-100"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Progress Bar Card -->
+          <div class="bg-white/10 backdrop-blur-xl p-4 rounded-lg shadow-md h-[100px]">
+            <h4 class="text-lg font-semibold text-white">Today's Calories Progress</h4>
+            <div class="flex justify-between text-white">
+              <span>Total Calories:</span>
+              <span id="totalCalories">0</span>
+            </div>
+            <div class="mt-2 h-2 bg-gray-600 rounded-full">
+              <div id="caloriesProgress" class="h-full bg-yellow-400 rounded-full" style="width: 0;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Pie Chart -->
+        <div class="md:col-span-1">
+          <div class="bg-white/10 backdrop-blur-xl p-6 rounded-lg shadow-md h-[400px]">
+            <h3 class="text-xl font-semibold mb-4 text-white">Nutrient Breakdown</h3>
+            <canvas id="progressChart" width="400" height="400"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nutrient Bar Chart -->
+      <div class="bg-white/10 backdrop-blur-xl p-6 rounded-lg shadow-md mt-6">
+        <h3 class="text-xl font-semibold mb-4 text-white">Nutrient Intake Overview</h3>
+        <canvas id="nutrientChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/tracker.js' %}"></script>
+{% endblock %}
