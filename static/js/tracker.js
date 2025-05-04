@@ -2,8 +2,6 @@ let allFoods = [];
 let selectedFoods = [];
 let pieChart = null;
 let barChart = null;
-
-
   
 
 async function fetchFoods() {

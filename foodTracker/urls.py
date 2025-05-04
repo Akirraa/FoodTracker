@@ -15,5 +15,5 @@ urlpatterns = [
     
     
     #api endpoints
-     path('api/foods/', views.food_list, name='food-list'),
+    path('api/foods/', views.food_list, name='food-list'),
 ]

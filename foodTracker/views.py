@@ -17,14 +17,11 @@ def home(request):
     return render(request, 'FoodTracker/home.html', {'dark_bg':True}) 
 
 
-
-
 def search_suggestions(request): 
     query = request.GET.get('q', '').strip() 
     suggestions = []
 
     if query:
-        # Recipes starting with query
         recipes = Recipe.objects.filter(name__istartswith=query).values('id', 'name')[:5]
         suggestions += [
             {
@@ -35,7 +32,6 @@ def search_suggestions(request):
             for r in recipes
         ]
 
-        # Foods starting with query
         foods = Food.objects.filter(name__istartswith=query).values('id', 'name')[:5]
         suggestions += [
             {
@@ -66,8 +62,6 @@ def food_list(request):
     foods = Food.objects.all()
     serializer = FoodSerializer(foods, many=True)
     return Response(serializer.data)
-
-
 
 
 def tracking_page(request):

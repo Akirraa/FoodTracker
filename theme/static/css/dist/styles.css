@@ -937,6 +937,11 @@
     transition-duration: 300ms;
   }
   @media (hover: hover) {
+    .hover\:cursor-cell:hover {
+      cursor: cell;
+    }
+  }
+  @media (hover: hover) {
     .hover\:bg-gray-400:hover {
       background-color: var(--color-gray-400);
     }
