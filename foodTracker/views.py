@@ -228,7 +228,14 @@ def tracking_page(request):
     return render(request, 'FoodTracker/tracking.html', {'dark_bg': True})
 
 
-@csrf_exempt  # or use @ensure_csrf_cookie + proper CSRF middleware
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.utils.timezone import now
+
+from rest_framework.response import Response
+@csrf_exempt
+@permission_classes([IsAuthenticated])  # Ensure the user is authenticated
 def save_selected_foods(request):
     if request.method == "POST":
         try:
@@ -236,13 +243,107 @@ def save_selected_foods(request):
             selected_foods = data.get('foods', [])
             nutrition_totals = data.get('nutritionTotals', {})
 
-            if selected_foods:
-                print(f"Received {len(selected_foods)} foods to save.")
-                print("Selected foods:", selected_foods)
-                print("nutririon totals",nutrition_totals)
-            return JsonResponse({'status': 'success', 'count': len(selected_foods)})
+            if not selected_foods:
+                return JsonResponse({'status': 'error', 'message': 'No foods provided'}, status=400)
+
+            user = request.user
+            today = now().date()
+
+            saved_count = 0
+            for item in selected_foods:
+                food_id = item.get('id')
+                quantity = float(item.get('quantity', 1.0))
+
+                if not food_id:
+                    continue
+
+                try:
+                    food = Food.objects.get(id=food_id)
+                except Food.DoesNotExist:
+                    continue
+
+                # Check if a log already exists for this user-food-date combo
+                food_log, created = Food_Log.objects.update_or_create(
+                    user=user,
+                    food=food,
+                    date=today,
+                    quantity=quantity,
+                    nutritions=nutrition_totals,  # Store nutrition details as JSON
+                )
+
+                saved_count += 1
+
+            return JsonResponse({'status': 'success', 'saved': saved_count, 'nutrition': nutrition_totals})
 
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
     return JsonResponse({'status': 'error', 'message': 'Invalid method'}, status=405)
+
+
+
+from rest_framework.generics import ListAPIView
+from rest_framework.pagination import PageNumberPagination
+from .models import Recipe
+from .serializers import RecipeSerializer
+from .forms import RecipeForm, RecipeIngredientFormSet
+from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
+
+
+class RecipePagination(PageNumberPagination):
+    page_size = 6
+
+class RecipeListAPI(ListAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
+    pagination_class = RecipePagination
+    
+    
+    
+def recipe_page(request):
+    recipe_list = Recipe.objects.all()
+    paginator = Paginator(recipe_list, 6)  # 6 recipes per page
+
+    page_number = request.GET.get('page') or 1
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "recipes/recipes.html", {
+        'dark_bg': True,
+        'page_obj': page_obj,
+    })
+    
+    
+def create_recipe(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES)
+        formset = RecipeIngredientFormSet(request.POST)
+        
+        if form.is_valid() and formset.is_valid():
+            recipe = form.save()
+            formset.instance = recipe  # Bind formset to the saved recipe
+            formset.save()
+            return redirect('recipe_page')  # Change to your success URL
+
+    else:
+        form = RecipeForm()
+        formset = RecipeIngredientFormSet()
+
+    context = {
+        'form': form,
+        'formset': formset,
+        'dark_bg': True,  # Assuming you want a dark background for this page
+    }
+    return render(request, 'recipes/create_recipe.html', context)
+
+from django.shortcuts import get_object_or_404, render
+from .models import Recipe
+
+def recipe_detail(request, pk):
+    recipe = get_object_or_404(Recipe, pk=pk)
+    instruction_lines = [line.strip() for line in recipe.instructions.strip().splitlines() if line.strip()]
+    return render(request, 'recipes/recipe_detail.html', {
+        'recipe': recipe,
+        'instruction_lines': instruction_lines,
+        'dark_bg': True,
+    })

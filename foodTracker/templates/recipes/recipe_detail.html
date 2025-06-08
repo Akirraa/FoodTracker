@@ -1,0 +1,56 @@
+{% extends "foodTracker/base.html" %}
+{% load static %}
+
+{% block title %}{{ recipe.name }} | Nutra{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-cover bg-center" style="background-image: url('{% static "images/Background_Nutre.png" %}');">
+  <div class="pt-24 px-6 flex justify-center">
+    <div class="bg-white/30 backdrop-blur-xl rounded-3xl shadow-2xl max-w-2xl w-full p-12 flex flex-col items-center relative border border-yellow-300">
+
+      <!-- Image top centered -->
+      <div class="w-64 h-64 rounded-xl overflow-hidden shadow-xl mb-10 ring-4 ring-yellow-400">
+        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}" class="w-full h-full object-cover">
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-5xl font-extrabold text-white mb-6 text-center drop-shadow-lg">{{ recipe.name }}</h1>
+
+      <!-- Description -->
+      <p class="text-white mb-8 text-center px-6 leading-relaxed text-lg font-semibold drop-shadow-md">
+        {{ recipe.description }}
+      </p>
+
+      <!-- Timings and Servings stacked with emojis -->
+      <div class="flex flex-col items-center space-y-4 mb-10 text-white font-bold text-xl drop-shadow-md">
+        <div>⏱️ Prep Time: <span class="text-white">{{ recipe.prep_time }} min</span></div>
+        <div>🔥 Cook Time: <span class="text-white">{{ recipe.cook_time }} min</span></div>
+        <div>🍽️ Servings: <span class="text-white">{{ recipe.servings }}</span></div>
+      </div>
+
+      <!-- Ingredients section -->
+      {% if recipe.recipe_ingredient_set.all %}
+      <div class="w-full mb-10 px-6">
+        <h2 class="text-3xl font-extrabold mb-4 text-white drop-shadow-xl tracking-wide">🧂 Ingredients</h2>
+        <ul class="list-disc list-inside text-white leading-loose space-y-2 text-lg font-medium">
+          {% for ingredient in recipe.recipe_ingredient_set.all %}
+            <li><span class="text-white">{{ ingredient.quantity }}</span> <span class="text-white">{{ ingredient.food.name }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <!-- Instructions as steps -->
+      <div class="w-full max-h-64 overflow-auto px-6 text-white leading-relaxed text-lg border-t border-yellow-500 pt-6 drop-shadow-md">
+        <h2 class="text-3xl font-extrabold mb-4 text-white drop-shadow-md">📋 Instructions</h2>
+        <ol class="list-decimal list-inside space-y-3">
+          {% for line in instruction_lines %}
+            <li class="bg-white/10 rounded-lg px-4 py-2">{{ line }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

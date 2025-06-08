@@ -32,6 +32,7 @@ class Food_Log(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     food = models.ForeignKey(Food, on_delete=models.CASCADE)
     quantity = models.FloatField(default=1.0, validators=[MinValueValidator(0.01)])
+    nutritions = models.JSONField(default=dict, blank=True)  # Store nutrition details as JSON
     date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -83,6 +84,8 @@ class Food_Log(models.Model):
 
 class Recipe(models.Model):
     name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='recipe_images/', blank=True, null=True, default='recipe_images/default.jpg')
+    description = models.TextField(blank=True, null=True)
     instructions = models.TextField()
     prep_time = models.IntegerField()
     cook_time = models.IntegerField()
@@ -106,3 +109,4 @@ class Recipe_Ingredient(models.Model):
         
     def __str__(self):
         return f"{self.recipe.name} - {self.food.name} - {self.quantity}"
+    

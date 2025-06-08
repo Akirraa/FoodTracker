@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Food, Food_Log
+from .models import Food, Food_Log, Recipe
 
 class FoodSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,3 +34,17 @@ class FoodLogSerializer(serializers.ModelSerializer):
 
     def get_total_fats(self, obj):
         return obj.total_fats()
+
+
+class RecipeSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Recipe
+        fields = ['id', 'title', 'description', 'image_url']
+
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url'):
+            return request.build_absolute_uri(obj.image.url)
+        return '/static/images/pasta_salad.webp'  

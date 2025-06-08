@@ -1,0 +1,157 @@
+{% extends "FoodTracker/base.html" %}
+{% load static %}
+
+{% block title %}Create Recipe{% endblock %}
+
+{% block content %}
+<div class="min-h-screen pt-24 bg-cover bg-center bg-no-repeat" style="background-image: url('{% static "images/Background_Nutre.png" %}')">
+  <div class="max-w-2xl mx-4 md:mx-auto bg-black/70 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden px-6 md:px-10 py-12 my-8">
+    
+    <!-- Form Header -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-white mb-2">🍽️ Create a Recipe</h1>
+      <p class="text-white">Share your culinary masterpiece with the community</p>
+    </div>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-8">
+      {% csrf_token %}
+
+      <!-- Main Form Fields -->
+      <div class="space-y-6">
+        {% for field in form %}
+        <div class="flex flex-col items-center">
+          <label class="block text-lg font-medium text-white mb-2 w-full text-center">
+            {{ field.label }}
+          </label>
+          <div class="w-full max-w-md">
+            {% if field.name == "instructions" %}
+              <textarea name="{{ field.name }}" id="{{ field.auto_id }}"
+                        rows="6"
+                        class="w-full px-4 py-3 rounded-xl bg-white/10 text-white border border-white/20 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition duration-200 placeholder-gray-300"
+                        {% if field.field.required %}required{% endif %}>{{ field.value|default_if_none:'' }}</textarea>
+            {% else %}
+              <input type="{{ field.field.widget.input_type }}" 
+                     name="{{ field.name }}"
+                     id="{{ field.auto_id }}"
+                     class="w-full px-4 py-3 rounded-xl bg-white/10 text-white border border-white/20 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/30 transition duration-200 placeholder-gray-300"
+                     value="{{ field.value|default_if_none:'' }}"
+                     {% if field.field.required %}required{% endif %}>
+            {% endif %}
+            {% if field.help_text %}
+              <p class="mt-1 text-sm text-gray-200 text-center">{{ field.help_text }}</p>
+            {% endif %}
+            {% if field.errors %}
+              <p class="text-red-400 text-sm mt-1 text-center">{{ field.errors }}</p>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Ingredients Section -->
+      <div class="mt-12 overflow-hidden">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl font-bold text-white mb-2">🧾 Ingredients</h2>
+          <p class="text-white">Add ingredients to your recipe</p>
+        </div>
+        
+        <div class="space-y-4 max-w-sm mx-auto" data-ingredient-forms>
+          {{ formset.management_form }}
+          {% for form in formset %}
+          <div class="flex flex-col gap-4 bg-white/5 rounded-xl px-4 py-4 border border-white/10 hover:border-yellow-400/30 transition duration-200 overflow-hidden">
+            <!-- Food Dropdown -->
+            <div class="w-full">
+              <label class="block text-sm font-medium text-black mb-1 text-center">Food Item</label>
+              {{ form.food }}
+            </div>
+
+            <!-- Quantity Input -->
+            <div class="w-full">
+              <label class="block text-sm font-medium text-black mb-1 text-center">Quantity</label>
+              {{ form.quantity }}
+            </div>
+
+            <!-- Delete Checkbox -->
+            {% if form.DELETE %}
+            <div class="flex items-center justify-center">
+              <label class="inline-flex items-center space-x-2 cursor-pointer text-white">
+                {{ form.DELETE }}
+                <span class="text-sm hover:text-yellow-300 transition cursor-pointer remove-btn">Remove</span>
+              </label>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Add Ingredient Button -->
+        <div class="flex justify-center mt-6">
+          <button type="button" id="add-ingredient" class="px-6 py-2 bg-yellow-400 text-black rounded-xl hover:bg-yellow-500 transition duration-200 font-semibold shadow-md">
+            ➕ Add Ingredient
+          </button>
+        </div>
+
+        <!-- Hidden Empty Form Template for Cloning -->
+        <div id="empty-form" class="hidden">
+          <div class="flex flex-col gap-4 bg-white/5 rounded-xl px-4 py-4 border border-white/10 hover:border-yellow-400/30 transition duration-200 overflow-hidden">
+            <div class="w-full">
+              <label class="block text-sm font-medium text-black mb-1 text-center">Food Item</label>
+              {{ formset.empty_form.food }}
+            </div>
+            <div class="w-full">
+              <label class="block text-sm font-medium text-black mb-1 text-center">Quantity</label>
+              {{ formset.empty_form.quantity }}
+            </div>
+            <div class="flex items-center justify-center">
+              <label class="inline-flex items-center space-x-2 cursor-pointer text-white">
+                <input type="checkbox" class="delete-checkbox" name="form-__prefix__-DELETE" id="id_form-__prefix__-DELETE" />
+                <span class="text-sm hover:text-yellow-300 transition cursor-pointer remove-btn">Remove</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-center mt-12">
+        <button type="submit" class="px-10 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 font-bold rounded-xl hover:from-yellow-500 hover:to-yellow-600 transition duration-300 shadow-lg transform hover:scale-105">
+          🚀 Save Recipe
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<style>
+  input[type="file"]::file-selector-button {
+    border: none;
+    padding: 0.4em 0.8em;
+    border-radius: 0.5em;
+    background-color: rgba(251, 191, 36, 0.8);
+    color: black;
+    font-weight: 500;
+    margin-right: 1em;
+    transition: all 0.2s;
+  }
+
+  input[type="file"]::file-selector-button:hover {
+    background-color: rgba(251, 191, 36, 1);
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    color: black; /* Ensures dropdown text is black */
+  }
+</style>
+
+<script>
+  const emptyFormHtml = `{% filter escapejs %}{{ formset.empty_form|safe }}{% endfilter %}`;
+  // Then use emptyFormHtml instead of emptyFormDiv.innerHTML
+</script>
+<script src="{% static 'js/recipe_form.js' %}"></script>
+{% endblock %}
