@@ -424,6 +424,9 @@
   .max-h-36 {
     max-height: calc(var(--spacing) * 36);
   }
+  .min-h-\[60vh\] {
+    min-height: 60vh;
+  }
   .min-h-screen {
     min-height: 100vh;
   }
@@ -462,6 +465,9 @@
   }
   .w-52 {
     width: calc(var(--spacing) * 52);
+  }
+  .w-64 {
+    width: calc(var(--spacing) * 64);
   }
   .w-72 {
     width: calc(var(--spacing) * 72);
@@ -883,6 +889,9 @@
   .placeholder-gray-300::placeholder {
     color: var(--color-gray-300);
   }
+  .opacity-80 {
+    opacity: 80%;
+  }
   .shadow {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -935,11 +944,6 @@
   .duration-300 {
     --tw-duration: 300ms;
     transition-duration: 300ms;
-  }
-  @media (hover: hover) {
-    .hover\:cursor-cell:hover {
-      cursor: cell;
-    }
   }
   @media (hover: hover) {
     .hover\:bg-gray-400:hover {

@@ -9,13 +9,15 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import environ
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -48,7 +50,7 @@ INSTALLED_APPS = [
     #tailwind stuff
     'tailwind',  
     'theme',
-    'django_browser_reload', #no more struggling to reload the page after every change  
+    'django_browser_reload', 
 ]
 NPM_BIN_PATH = 'D:/nodejs/npm.cmd' 
 TAILWIND_APP_NAME = 'theme'
@@ -159,3 +161,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTH_USER_MODEL = 'authentification.User'
+
+HUGGINGFACE_API_TOKEN = env('HUGGINGFACE_API_TOKEN')

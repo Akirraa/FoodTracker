@@ -1,44 +1,48 @@
 {% load static %}
-<nav id="navbar" class=" bg-transparent {% if dark_bg %} text-white {% else %}  text-black {% endif %} p-4 flex items-center justify-between relative ml-10">
+<nav id="navbar" class="bg-transparent {% if dark_bg %} text-white {% else %} text-black {% endif %} p-4 flex items-center justify-between relative ml-10">
 
-<!-- Left: Logo -->
-<div class="flex items-center justify-start w-auto">
-  <a href="{% url 'home' %}" class="flex items-center">
-    <img src="{%if dark_bg%} {% static 'images/logo.webp' %} {% else %} {% static 'images/Dark logo.png' %} {% endif %}" 
-         alt="Food Tracker Logo" 
-         class="h-12 w-auto md:h-16 lg:h-20">
-  </a>
-</div>
-
+  <!-- Left: Logo -->
+  <div class="flex items-center justify-start w-auto">
+    <a href="{% url 'home' %}" class="flex items-center">
+      <img src="{% if dark_bg %} {% static 'images/logo.webp' %} {% else %} {% static 'images/Dark logo.png' %} {% endif %}" 
+           alt="Food Tracker Logo" 
+           class="h-12 w-auto md:h-16 lg:h-20">
+    </a>
+  </div>
 
   <!-- Center: Navigation Links -->
   <div class="absolute left-1/2 transform -translate-x-1/2 hidden md:flex space-x-8">
-    <a href="{% url 'home' %}" class="text-lg hover:text-yellow-400  transition-all duration-300 cursor-grab">Home</a>
-      
-    <a href="#" class="text-lg hover:text-yellow-400  transition-all duration-300">Recipes</a>
-    <a href="#" class="text-lg hover:text-yellow-400  transition-all duration-300">Contact Us</a>
+    <a href="{% url 'home' %}" class="text-lg hover:text-yellow-400 transition-all duration-300 cursor-grab">Home</a>
+    <a href="#" class="text-lg hover:text-yellow-400 transition-all duration-300">Recipes</a>
+    <a href="#" class="text-lg hover:text-yellow-400 transition-all duration-300">Contact Us</a>
     <a href="{% url 'about_us' %}" class="text-lg hover:text-yellow-400 transition-all duration-300">About Us</a>
   </div>
 
+  <!-- Right: Auth Links -->
   <div class="flex items-center space-x-4 w-2xs">
-    {%if user.is_authenticated%} 
-      <a href="{% url 'tracking_page' %}" class="text-lg hover:text-yellow-400  transition-all duration-300">Tracking</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'tracking_page' %}" class="text-lg hover:text-yellow-400 transition-all duration-300">Tracking</a>
       <svg class="w-1 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 100">
         <line x1="0" y1="0" x2="0" y2="100" stroke="white" stroke-width="2" />
       </svg>
-      <a href="#" class="text-lg hover:text-yellow-400  transition-all duration-300">{{user.username}}</a>
-    {%else%}
-      <a href="{% url 'login' %}" class="text-lg hover:text-yellow-400  transition-all duration-300 ">Login</a>
+      <a href="#" class="text-lg hover:text-yellow-400 transition-all duration-300">{{ user.username }}</a>
       <svg class="w-1 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 100">
         <line x1="0" y1="0" x2="0" y2="100" stroke="white" stroke-width="2" />
       </svg>
-      <a href="{% url 'register' %}" class="text-lg hover:text-yellow-400  transition-all duration-300">Sign up</a>
-    {%endif%}
+      <a href="{% url 'logout' %}" class="text-lg hover:text-yellow-400 transition-all duration-300">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}" class="text-lg hover:text-yellow-400 transition-all duration-300">Login</a>
+      <svg class="w-1 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 100">
+        <line x1="0" y1="0" x2="0" y2="100" stroke="white" stroke-width="2" />
+      </svg>
+      <a href="{% url 'register' %}" class="text-lg hover:text-yellow-400 transition-all duration-300">Sign up</a>
+    {% endif %}
+    
     <button id="menu-toggle" class="{% if dark_bg %} text-white {% else %} text-black {% endif %} focus:outline-none">
       <svg class="{% if dark_bg %} text-white {% else %} text-black {% endif %} w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M4 6h16M4 12h16m-7 6h7"></path>
+              d="M4 6h16M4 12h16m-7 6h7"></path>
       </svg>
     </button>
   </div>

@@ -4,6 +4,8 @@ from datetime import date #hedhi bch ne7seb beha age
 from django.urls import reverse_lazy
 from django.contrib.auth import login as auth_login 
 from django.views import View
+from django.contrib.auth import logout as auth_logout
+
 
 
 #signup views
@@ -45,3 +47,8 @@ def login(request):
                 'hide_navbar': True,}
 
     return render(request, 'authentification/login.html', context)
+
+# logout view
+def logout(request):
+    auth_logout(request)  
+    return redirect('home') 
